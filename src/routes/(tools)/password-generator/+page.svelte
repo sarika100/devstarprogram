@@ -1,72 +1,231 @@
-<script lang="ts">
-	import { Label, Range, Checkbox } from 'flowbite-svelte';
-
-	import Intro from '$lib/Intro.svelte';
-	import Copy from '$lib/Copy.svelte';
-
-	export let data;
-
-	const charsets = {
-		uppercase: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
-		lowercase: 'abcdefghijklmnopqrstuvwxyz',
-		numbers: '0123456789',
-		symbols: '!@#$%^&*?',
-	};
-
-	let length = 12;
-	let characters = ['uppercase', 'lowercase', 'numbers', 'symbols'];
-	let password: string;
-
-	$: {
-		(() => {
-			let charset = Object.keys(charsets)
-				.filter((character) => characters.includes(character))
-				.map((character) => charsets[character])
-				.join('');
-
-			password = '';
-			for (let i = 0; i < length; i++) {
-				const randomIndex = Math.floor(Math.random() * charset.length);
-				password += charset[randomIndex];
-			}
-		})();
+<script>
+	let selectedColor = "#ffffff";
+  
+	function updateColor(event) {
+	  selectedColor = event.target.value;
 	}
-</script>
-
-<Intro heading={data.meta.title} description={data.meta.description} />
-
-<section class="bg-white dark:bg-gray-900">
-	<div class="py-8 px-4 mx-auto max-w-screen-xl lg:px-12">
-		<div class="card gap-16 items-center mx-auto max-w-screen-xl lg:grid lg:grid-cols-2 overflow-hidden rounded-lg">
-			<div class="p-8">
-				<Label>Password Length</Label>
-				<div class="flex items-center">
-					<span class="text-gray-900 dark:text-white mr-3">1</span><Range bind:value={length} min="1" max="50" /><span class="text-gray-900 dark:text-white ml-3">50</span>
-				</div>
-
-				<Label class="mt-3">Characters</Label>
-				<div class="flex gap-3">
-					<Checkbox bind:group={characters} value="uppercase" disabled={characters.length <= 1 && characters[0] == 'uppercase'}>Uppercase</Checkbox>
-					<Checkbox bind:group={characters} value="lowercase" disabled={characters.length <= 1 && characters[0] == 'lowercase'}>Lowercase</Checkbox>
-					<Checkbox bind:group={characters} value="numbers" disabled={characters.length <= 1 && characters[0] == 'numbers'}>Numbers</Checkbox>
-					<Checkbox bind:group={characters} value="symbols" disabled={characters.length <= 1 && characters[0] == 'symbols'}>Symbols</Checkbox>
-				</div>
-				
-			</div>
-			<div class="p-8 h-full flex rounded-lg relative justify-center items-center {length > 10 ? 'bg-green-300' : length > 8 ? 'bg-orange-300' : 'bg-red-300'}">
-				<Copy text={password}/>
-				<span class="text-2xl font-extrabold break-all">{password}</span>
-			</div>
+  
+	$: rgbValue = getRGB(selectedColor);
+	$: hexValue = selectedColor;
+  
+	function getRGB(hexColor) {
+	  // Convert HEX to RGB
+	  const hex = hexColor.replace(/^#/, '');
+	  const bigint = parseInt(hex, 16);
+	  const r = (bigint >> 16) & 255;
+	  const g = (bigint >> 8) & 255;
+	  const b = bigint & 255;
+	  return `${r}, ${g}, ${b}`;
+	}
+  </script>
+  
+  
+  <style>
+	* {
+	  margin: 0;
+	  padding: 0;
+	  box-sizing: border-box;
+	}
+  
+	/* Basic styling */
+	.html {
+	  font-family: Arial, sans-serif;
+	  background-image: linear-gradient(rgba(18, 41, 125, 1), rgba(18, 41, 125, 0));
+	}
+  
+	img {
+	  width: 300px;
+	}
+  
+	header {
+	  /* background-color: #0D1D59; */
+	  color: #fff;
+	  padding: 30px 0;
+	  display: flex;
+	  justify-content: space-between;
+	  align-items: center;
+	  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+	}
+  
+	.logo h1 {
+	  font-size: 2rem;
+	  margin-left: 20px;
+	}
+  
+	nav ul {
+	  list-style: none;
+	  display: flex;
+	  margin-right: 20px;
+	}
+  
+	nav ul li {
+	  margin: 0 10px;
+	}
+  
+	nav ul li a {
+	  text-decoration: none;
+	  color: #fff;
+	  font-weight: bold;
+	}
+  
+	main {
+	  max-width: 1200px;
+	  margin: 0 auto;
+	  padding: 20px;
+	}
+  
+	.hero {
+	  background-color: transparent;
+	  color: #fff;
+	  font-size: 1.5rem;
+	  padding: 20px;
+	  border-radius: 5px;
+	  text-align: center;
+	}
+  
+	.hero h2 {
+	  font-size: 5rem;
+	  padding-bottom: 10px;
+	}
+  
+	.cta-button {
+	  display: inline-block;
+	  background-color: transparent;
+	  color: #151515;
+	  padding: 10px 20px;
+	  margin-top: 20px;
+	  border-color: #151515;
+	  border-style: solid;
+	  border-radius: 8px;
+	  text-decoration: none;
+	  font-weight: bold;
+	}
+  
+	.hero .cta-button {
+	  background-color: transparent;
+	  color: #ffffff;
+	  border-color: #ffffff;
+	}
+  
+	.features {
+	  display: block;
+	  justify-content: space-between;
+	  margin: 20px;
+	}
+  
+	.feature {
+	  flex: 1;
+	  background-color: #e1eff8;
+	  padding: 50px;
+	  border-radius: 5px;
+	  text-align: center;
+	  margin: 50px;
+	  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+	}
+  
+	.feature img {
+	  float: left;
+	  margin-top: 10px;
+	}
+  
+	.feature i {
+	  font-size: 2rem;
+	  margin-bottom: 10px;
+	}
+  
+	.feature h3 {
+	  font-size: 2.5rem;
+	}
+  
+	.feature p {
+	  font-size: 1.5rem;
+	}
+  
+	.footer {
+	  text-align: center;
+	  background-color: #333;
+	  color: #fff;
+	  padding: 10px 0;
+	}
+  
+	#color-picker-input {
+	  margin-left: 150px;
+	  margin-top: 15px;
+	  text-align: center;
+	  width: 50px;
+	  height: 30px;
+	  border-radius: 5px;
+	}
+  
+	#color-preview {
+	  width: 200px;
+	  height: 150px;
+	  float: left;
+	  margin-top: -150px;
+	  margin-left: 230px;
+	  margin-right: 20px;
+	  border-radius: 10px;
+	  border: 1px solid #ccc;
+	  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+	}
+  
+	#color-values {
+	  font-size: 1.2rem;
+	  margin-top: 20px;
+	  margin-left: 20px;
+	  display: block;
+	  margin-left: 150px;
+	}
+  
+	#rgb-value,
+	#hex-value {
+	  font-weight: bold;
+	}
+  
+	.abc p {
+	  padding: 10px;
+	  text-align: center;
+	}
+  </style>
+  
+  <section class="html"> 
+	<header>
+		<div class="logo">
+		<h1>Color Tools</h1>
 		</div>
-	</div>
-</section>
+		<nav>
+		<ul>
+			<li><a href="#">Home</a></li>
+			<li><a href="#">Palette</a></li>
+			<li><a href="#">About</a></li>
+		</ul>
+		</nav>
+	</header>
+	<main>
+		<section class="hero">
+		<h2>Color Details</h2>
+		<p>Make the most out of your favorite colors. Explore now!</p>
+		</section>
+		<section class="features">
+		<div class="feature abc">
+			<i class="Color_Details"></i>
+			<h3>Color Palette</h3>
+			<p class="pick">Pick A color!</p>
+			<input type="color" bind:value={selectedColor} on:input={updateColor} id="color-picker-input">
+			<div id="color-values">
+			<p>RGB: <span id="rgb-value">{rgbValue}</span></p>
+			<p>HEX: <span id="hex-value">{hexValue}</span></p>
+			</div>
+			<div id="color-preview" style="background-color: {selectedColor}"></div>
+		</div>
+		</section>
+	</main>
+	<footer>
+		<p>&copy; 2023 Color Tools</p>
+	</footer>
+  </section>
 
-<style>
-	.card {
-		box-shadow: rgba(0, 0, 0, 0.1) 0 0 0 2px;
-	}
 
-	:is(.dark .card) {
-		box-shadow: rgba(255, 255, 255, 0.5) 0 0 0 2px;
-	}
-</style>
+  
+  
+  
