@@ -94,5 +94,17 @@ export let tools = {
         icon: 'spider-web',
         link: '/robots-txt-generator',
         description: "The Robots.txt Generator is a must-have tool for developers to create the robots.txt file, which controls search engine crawlers' access to specific pages or directories on a website. This tool offers a user-friendly interface to define crawling rules, including allow and disallow directives, to ensure optimal search engine indexing and prevent unwanted content from being indexed. Create and customize your robots.txt file efficiently with this generator to enhance your website's search engine optimization (SEO) efforts."
+    },
+    'random-data-generator': {
+        name: 'Random Data Generator (βeta)',
+        icon: 'files', // Pending Icon Update
+        link: '/random-data-generator',
+        description: 'The Random Data Generator is a tool which generates fake/dummy dataset that can be used for testing.'
+    },
+    'color-details': {
+        name: 'Color Details',
+        icon: 'palette',
+        link: '/color-details',
+        description: "The Image Color Picker is a versatile tool that allows developers to extract color information from images effortlessly. With a simple interface, you can upload an image and identify specific colors by selecting points on the image. The tool provides the corresponding color codes (e.g., HEX, RGB, HSL) for easy integration into your projects. Streamline your color selection process and enhance your application's visual appeal with this efficient color picker."
     }
 };
